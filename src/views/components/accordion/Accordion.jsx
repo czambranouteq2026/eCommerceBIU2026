@@ -19,7 +19,7 @@ const Accordion = () => {
         <DocsComponents href="components/accordion/" />
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>React Accordion</strong>
+            <strong>React Accordion 2026</strong>
           </CCardHeader>
           <CCardBody>
             <p className="text-body-secondary small">
