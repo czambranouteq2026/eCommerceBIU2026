@@ -60,28 +60,45 @@ const AppSidebar = () => {
 
   return (
     <CSidebar
-      className="border-end"
-      colorScheme="dark"
+      className="border-end shadow-sm"
+      colorScheme="light"
       position="fixed"
       unfoldable={unfoldable}
       visible={sidebarShow}
+      style={{
+        backgroundColor: '#ffffff',
+        color: '#0d6efd',
+        '--cui-sidebar-bg': '#ffffff',
+        '--cui-sidebar-color': '#0d6efd',
+        '--cui-sidebar-border-color': '#e9ecef',
+        '--cui-sidebar-link-color': '#0d6efd',
+        '--cui-sidebar-link-hover-color': '#084298',
+        '--cui-sidebar-link-active-color': '#084298',
+      }}
       onVisibleChange={(visible) => {
         dispatch({ type: 'set', sidebarShow: visible })
       }}
     >
-      <CSidebarHeader className="border-bottom">
-        <CSidebarBrand to="/">
-          <img src="/src/assets/brand/logobiu.png"  content='align:center' alt="Logo" className="sidebar-brand-full" height={70} width={150} />
+      <CSidebarHeader className="border-bottom" style={{ backgroundColor: '#ffffff' }}>
+        <CSidebarBrand to="/" className="justify-content-center">
+          <img
+            src="/src/assets/brand/logobiu.png"
+            alt="Logo BIU"
+            className="sidebar-brand-full d-block mx-auto"
+            height={70}
+            width={150}
+            style={{ objectFit: 'contain' }}
+          />
           <CIcon customClassName="sidebar-brand-narrow" icon={sygnet} height={32} />
         </CSidebarBrand>
         <CCloseButton
           className="d-lg-none"
-          dark
+          color="dark"
           onClick={() => dispatch({ type: 'set', sidebarShow: false })}
         />
       </CSidebarHeader>
       <AppSidebarNav items={navigation} />
-      <CSidebarFooter className="border-top d-none d-lg-flex">
+      <CSidebarFooter className="border-top d-none d-lg-flex" style={{ backgroundColor: '#ffffff' }}>
         <CSidebarToggler
           onClick={() => dispatch({ type: 'set', sidebarUnfoldable: !unfoldable })}
         />

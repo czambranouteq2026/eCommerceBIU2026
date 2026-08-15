@@ -1,43 +1,84 @@
-# eCommerce BIU - Panel de Productos
+# BIU eCommerce Admin Platform
 
-Aplicación administrativa para gestionar productos de un eCommerce, construida con React + CoreUI y conectada a Supabase.
+Plataforma administrativa para un eCommerce, desarrollada con React, CoreUI y Supabase. La interfaz está enfocada en la gestión de productos y el control del catálogo comercial del negocio.
 
-## Menu lateral actual
+## Descripción
 
-La sección de navegación del sidebar incluye hasta el momento estas opciones de productos:
+Esta app funciona como un panel administrativo para una tienda online, donde se pueden gestionar:
+
+- Productos
+- Catálogo
+- Inventario
+- Categorías y marcas
+- Agregado y consulta de artículos
+- Visualización del catálogo comercial
+
+## Menú principal actual
+
+El sidebar de la aplicación incluye secciones orientadas a un eCommerce, por ejemplo:
 
 - Dashboard
-- eCommerce BIU
-- Products
+- Productos
   - Catálogo de Productos
   - Agregar Producto
   - Lista de Productos
+  - Categorías
+  - Inventario
+  - Marcas
+- Clientes
+  - Clientes
+  - Direcciones
+  - Wishlist
+  - Favoritos
+- Proveedores
+  - Proveedores
+  - Compras
+  - Pedidos a Proveedor
+  - Facturas
+- Ventas
+  - Pedidos
+  - Órdenes
+  - Pagos
+  - Devoluciones
+- Marketing
+  - Promociones
+  - Cupones
+  - Campañas
+  - Banners
+- Configuración
+  - Configuración General
+  - Usuarios
+  - Roles y Permisos
+  - Monedas
 
-## Funcionalidades actuales
+## Funcionalidades implementadas
 
-### Productos
-- Catálogo de productos desde Supabase
-- Agregar nuevo producto con formulario
+### Gestión de productos
+- Catálogo visual con imagen, precio y estado de stock
+- Botón para agregar al carrito local
+- Formulario para registrar nuevos productos
 - Listado de productos con búsqueda y paginación
-- Integración directa con la tabla `productos` en Supabase
+- Edición de productos desde modal
+- Eliminación de productos desde modal
+- Conexión directa con la tabla `productos` de Supabase
 
-## Rutas disponibles
+## Rutas principales
 
 - `/dashboard`
 - `/productos/catalogo`
 - `/productos/agregar`
 - `/productos/lista`
 
-## Tecnologías
+## Stack tecnológico
 
 - React 19
 - Vite
 - CoreUI React
 - Supabase JS
 
-## Configuración de Supabase
+## Variables de entorno
 
-Debes tener definidas estas variables de entorno en tu archivo `.env`:
+Crea un archivo `.env` con estas variables:
 
 ```env
 VITE_SUPABASE_URL=tu_url_de_supabase
@@ -77,57 +118,10 @@ src/
 │       └── Lista.jsx
 ├── _nav.jsx
 ├── routes.js
-└── App.jsx
+├── App.jsx
+└── components/
 ```
 
 ## Nota
 
-Por ahora la administración activa está enfocada en la gestión de productos del eCommerce. El menú lateral refleja esa etapa inicial del proyecto.
-- [React Spinner](https://coreui.io/react/docs/components/spinner/)
-- [React Stepper](https://coreui.io/react/docs/forms/stepper/) **PRO**
-- [React Switch](https://coreui.io/react/docs/forms/switch/)
-- [React Table](https://coreui.io/react/docs/components/table/)
-- [React Textarea](https://coreui.io/react/docs/forms/textarea/)
-- [React Time Picker](https://coreui.io/react/docs/forms/time-picker/) **PRO**
-- [React Toast](https://coreui.io/react/docs/components/toast/)
-- [React Tooltip](https://coreui.io/react/docs/components/tooltip/)
-
-## Versioning
-
-For transparency into our release cycle and in striving to maintain backward compatibility, CoreUI Free Admin Template is maintained under [the Semantic Versioning guidelines](http://semver.org/).
-
-See [the Releases section of our project](https://github.com/coreui/coreui-free-react-admin-template/releases) for changelogs for each release version.
-
-## Creators
-
-**Łukasz Holeczek**
-
-* <https://twitter.com/lukaszholeczek>
-* <https://github.com/mrholek>
-
-**Andrzej Kopański**
-
-* <https://github.com/xidedix>
-
-**CoreUI Team**
-
-* <https://twitter.com/core_ui>
-* <https://github.com/coreui>
-* <https://github.com/orgs/coreui/people>
-
-## Community
-
-Get updates on CoreUI's development and chat with the project maintainers and community members.
-
-- Follow [@core_ui on Twitter](https://twitter.com/core_ui).
-- Read and subscribe to [CoreUI Blog](https://coreui.ui/blog/).
-
-## Support CoreUI Development
-
-CoreUI is an MIT-licensed open source project and is completely free to use. However, the amount of effort needed to maintain and develop new features for the project is not sustainable without proper financial backing. You can support development by buying the [CoreUI PRO](https://coreui.io/pricing/?framework=react&src=github-coreui-free-react-admin-template) or by becoming a sponsor via [Open Collective](https://opencollective.com/coreui/).
-
-## Copyright and License
-
-copyright 2026 creativeLabs Łukasz Holeczek.   
-
-Code released under [the MIT license](https://github.com/coreui/coreui-free-react-admin-template/blob/main/LICENSE).
+La interfaz actual está diseñada como una administración moderna de eCommerce y está preparada para crecer con más módulos de clientes, proveedores, ventas y marketing.

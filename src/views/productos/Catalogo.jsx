@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import {
   CAlert,
   CBadge,
@@ -6,48 +6,29 @@ import {
   CCard,
   CCardBody,
   CCardHeader,
+  CCol,
   CFormInput,
+  CRow,
   CSpinner,
-  CTable,
-  CTableBody,
-  CTableDataCell,
-  CTableHead,
-  CTableHeaderCell,
-  CTableRow,
 } from '@coreui/react'
 
 import { useProductos } from '../../hooks/useProductos'
 
-const ListaProductos = () => {
+const CatalogoProductos = () => {
   const { productos, cargando, error, recargar } = useProductos()
   const [busqueda, setBusqueda] = useState('')
-  const [pagina, setPagina] = useState(1)
-  const productosPorPagina = 10
-
-  useEffect(() => {
-    setPagina(1)
-  }, [busqueda])
+  const [carrito, setCarrito] = useState([])
 
   const productosFiltrados = useMemo(() => {
     const texto = busqueda.trim().toLowerCase()
     if (!texto) return productos
 
-    return productos.filter((producto) =>
-      producto.nombre.toLowerCase().includes(texto) ||
-      producto.categoria.toLowerCase().includes(texto),
+    return productos.filter(
+      (producto) =>
+        producto.nombre.toLowerCase().includes(texto) ||
+        producto.categoria.toLowerCase().includes(texto),
     )
   }, [productos, busqueda])
-
-  const totalPaginas = Math.max(
-    1,
-    Math.ceil(productosFiltrados.length / productosPorPagina),
-  )
-  const paginaActual = Math.min(pagina, totalPaginas)
-
-  const productosPaginados = useMemo(() => {
-    const inicio = (paginaActual - 1) * productosPorPagina
-    return productosFiltrados.slice(inicio, inicio + productosPorPagina)
-  }, [productosFiltrados, paginaActual])
 
   const formatearPrecio = (precio) =>
     new Intl.NumberFormat('es-EC', {
@@ -55,22 +36,30 @@ const ListaProductos = () => {
       currency: 'USD',
     }).format(Number(precio))
 
+  const agregarAlCarrito = (producto) => {
+    setCarrito((actual) => [...actual, producto.id])
+  }
+
   return (
     <CCard className="mb-4">
-      <CCardHeader className="d-flex justify-content-between align-items-center">
+      <CCardHeader className="d-flex justify-content-between align-items-center flex-wrap gap-2">
         <div>
-          <strong>Lista de productos</strong>
+          <strong>Catálogo de productos</strong>
           <div className="small text-body-secondary">
-            Productos obtenidos desde Supabase
+            Vista comercial del eCommerce
           </div>
         </div>
-        <CButton color="primary" onClick={recargar} disabled={cargando}>
-          Actualizar
-        </CButton>
+
+        <div className="d-flex align-items-center gap-2">
+          <CBadge color="success">Carrito: {carrito.length}</CBadge>
+          <CButton color="primary" onClick={recargar} disabled={cargando}>
+            Actualizar
+          </CButton>
+        </div>
       </CCardHeader>
 
       <CCardBody>
-        <div className="d-flex justify-content-between align-items-center mb-3">
+        <div className="d-flex justify-content-between align-items-center mb-4 gap-3 flex-wrap">
           <CFormInput
             type="search"
             placeholder="Buscar producto o categoría..."
@@ -86,7 +75,7 @@ const ListaProductos = () => {
         {cargando && (
           <div className="text-center py-5">
             <CSpinner color="primary" />
-            <p className="mt-3">Cargando productos...</p>
+            <p className="mt-3">Cargando catálogo...</p>
           </div>
         )}
 
@@ -97,92 +86,74 @@ const ListaProductos = () => {
         )}
 
         {!cargando && !error && (
-          <>
-            <CTable align="middle" bordered hover responsive striped>
-              <CTableHead color="dark">
-                <CTableRow>
-                  <CTableHeaderCell>ID</CTableHeaderCell>
-                  <CTableHeaderCell>Imagen</CTableHeaderCell>
-                  <CTableHeaderCell>Producto</CTableHeaderCell>
-                  <CTableHeaderCell>Categoría</CTableHeaderCell>
-                  <CTableHeaderCell>Precio</CTableHeaderCell>
-                  <CTableHeaderCell>Stock</CTableHeaderCell>
-                </CTableRow>
-              </CTableHead>
-              <CTableBody>
-                {productosPaginados.length === 0 ? (
-                  <CTableRow>
-                    <CTableDataCell colSpan={6} className="text-center py-4">
-                      No se encontraron productos.
-                    </CTableDataCell>
-                  </CTableRow>
-                ) : (
-                  productosPaginados.map((producto) => (
-                    <CTableRow key={producto.id}>
-                      <CTableDataCell>{producto.id}</CTableDataCell>
-                      <CTableDataCell>
-                        <img
-                          src={producto.imagen_url}
-                          alt={producto.nombre}
-                          width="75"
-                          height="55"
-                          style={{ objectFit: 'cover', borderRadius: '6px' }}
-                        />
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <strong>{producto.nombre}</strong>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <CBadge color="info">{producto.categoria}</CBadge>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <span className="fw-semibold text-primary">
-                          {formatearPrecio(producto.precio)}
-                        </span>
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        <CBadge color={producto.stock > 0 ? 'success' : 'danger'}>
-                          {producto.stock > 0
-                            ? `${producto.stock} disponibles`
-                            : 'Agotado'}
-                        </CBadge>
-                      </CTableDataCell>
-                    </CTableRow>
-                  ))
-                )}
-              </CTableBody>
-            </CTable>
+          <CRow className="g-4">
+            {productosFiltrados.length === 0 ? (
+              <CCol xs={12}>
+                <div className="text-center py-4 text-body-secondary">
+                  No se encontraron productos.
+                </div>
+              </CCol>
+            ) : (
+              productosFiltrados.map((producto) => {
+                const yaEstaEnCarrito = carrito.includes(producto.id)
+                const enStock = Number(producto.stock) > 0
 
-            <div className="d-flex justify-content-between align-items-center">
-              <small className="text-body-secondary">
-                Página {paginaActual} de {totalPaginas}
-              </small>
-              <div className="d-flex gap-2">
-                <CButton
-                  color="secondary"
-                  variant="outline"
-                  disabled={paginaActual === 1}
-                  onClick={() => setPagina((valor) => Math.max(1, valor - 1))}
-                >
-                  Anterior
-                </CButton>
-                <CButton
-                  color="primary"
-                  variant="outline"
-                  disabled={paginaActual === totalPaginas}
-                  onClick={() =>
-                    setPagina((valor) => Math.min(totalPaginas, valor + 1))
-                  }
-                >
-                  Siguiente
-                </CButton>
-              </div>
-            </div>
-          </>
+                return (
+                  <CCol xs={12} sm={6} md={4} lg={3} key={producto.id}>
+                    <CCard className="h-100 shadow-sm border-0">
+                      <div className="ratio ratio-4x3">
+                        <img
+                          src={
+                            producto.imagen_url ||
+                            'https://placehold.co/600x400/edf2f7/64748b?text=Producto'
+                          }
+                          alt={producto.nombre}
+                          className="img-fluid object-fit-cover w-100 h-100"
+                          style={{ borderTopLeftRadius: '0.5rem', borderTopRightRadius: '0.5rem' }}
+                        />
+                      </div>
+
+                      <CCardBody className="d-flex flex-column">
+                        <div className="d-flex justify-content-between align-items-start gap-2 mb-2">
+                          <strong>{producto.nombre}</strong>
+                          <CBadge color={enStock ? 'success' : 'warning'}>
+                            {enStock ? 'Disponible' : 'Sin stock'}
+                          </CBadge>
+                        </div>
+
+                        <div className="mb-3">
+                          <CBadge color="info" className="mb-2">
+                            {producto.categoria}
+                          </CBadge>
+                          <div className="fs-5 fw-bold text-primary">
+                            {formatearPrecio(producto.precio)}
+                          </div>
+                          <small className="text-body-secondary">
+                            Stock: {producto.stock}
+                          </small>
+                        </div>
+
+                        <div className="mt-auto">
+                          <CButton
+                            color={yaEstaEnCarrito ? 'success' : 'primary'}
+                            className="w-100"
+                            onClick={() => agregarAlCarrito(producto)}
+                            disabled={yaEstaEnCarrito || !enStock}
+                          >
+                            {yaEstaEnCarrito ? 'Agregado' : 'Agregar al carrito'}
+                          </CButton>
+                        </div>
+                      </CCardBody>
+                    </CCard>
+                  </CCol>
+                )
+              })
+            )}
+          </CRow>
         )}
       </CCardBody>
     </CCard>
   )
 }
 
-export default ListaProductos
+export default CatalogoProductos

@@ -47,7 +47,7 @@ import React from 'react'
  */
 export const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: '/dashboard', name: 'Dashboard', element: CatalogoProductos },
   { path: '/productos/catalogo', name: 'Catálogo de Productos', element: CatalogoProductos },
   { path: '/productos/agregar', name: 'Agregar Producto', element: AgregarProducto },
   { path: '/productos/lista', name: 'Lista de Productos', element: ListaProductos },
