@@ -1,5 +1,9 @@
 # BIU eCommerce Admin Platform
 
+<p align="center">
+  <img src="public/captura.png" alt="BIU eCommerce Admin Platform" width="900" />
+</p>
+
 Plataforma administrativa para un eCommerce, desarrollada con React, CoreUI y Supabase. La interfaz está enfocada en la gestión de productos y el control del catálogo comercial del negocio.
 
 ## Descripción
