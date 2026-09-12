@@ -1,4 +1,4 @@
-# BIU eCommerce Admin Platform
+# BIU eCommerce Admin Platform 2026
 
 <p align="center">
   <img src="public/captura.png" alt="BIU eCommerce Admin Platform" width="900" />
