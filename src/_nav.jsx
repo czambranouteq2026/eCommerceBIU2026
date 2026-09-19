@@ -133,13 +133,13 @@ const _nav = [
         name: 'Marcas',
         to: '/productos/catalogo',
       },
-    ],
-  },
-  {
+        {
         component: CNavItem,
         name: 'Eliminar Producto',
         to: '/productos/eliminar',
       },
+    ],
+  },
   {
     component: CNavGroup,
     name: 'Clientes',
