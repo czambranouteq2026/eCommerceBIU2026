@@ -136,6 +136,11 @@ const _nav = [
     ],
   },
   {
+        component: CNavItem,
+        name: 'Eliminar Producto',
+        to: '/productos/eliminar',
+      },
+  {
     component: CNavGroup,
     name: 'Clientes',
     icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
